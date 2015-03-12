@@ -1,3 +1,9 @@
+/**
+ * Cable holder clips.
+ *
+ * Made by coredump hackerspace in Rapperswil, Switzerland.
+ * CC BY-SA 3.0.
+ */
 corner_radius = 4;
 thickness = 5.5;
 base_width = 20;
