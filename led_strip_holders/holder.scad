@@ -3,6 +3,9 @@
  *
  * Made by coredump hackerspace in Rapperswil, Switzerland.
  * CC BY-SA 3.0.
+ *
+ * Originally published at https://www.youmagine.com/designs/led-strip-holder-nail-clips/
+ *
  */
 corner_radius = 4;
 thickness = 5.5;
