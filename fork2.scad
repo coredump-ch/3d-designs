@@ -58,7 +58,7 @@ module handle() {
         translate([0,0,LENGTH])
             body();
         translate([0,0,LENGTH-RADIUS*2+TIP_LENGTH])
-            sphere(r=RADIUS*2);
+            sphere(r=RADIUS*2, $fn=150);
     }
 }
 
