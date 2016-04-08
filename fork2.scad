@@ -13,8 +13,8 @@ FORK_MID_ANGLE = 10;
 FORK_TIP_LENGTH = 13;
 FORK_TIP_ANGLE = 25;
 FORK_THICKNESS = 3;
-CONNECTOR_THICKNESS = 2;
-CONNECTOR_LENGTH = 5;
+CONNECTOR_THICKNESS = 3;
+CONNECTOR_LENGTH = 7;
 CONNECTOR_TOLERANCE = 0.4;
 
 EXPLODE = 20;
@@ -122,60 +122,39 @@ module combined() {
 }
 
 module divider() {
-    base_length = FORK_BASE_LENGTH;
     base_mid_length = FORK_BASE_LENGTH + FORK_MID_LENGTH;
 
+    rotate(a=90, v=[0,0,1])
     rotate(a=90, v=[1,0,0]) {
         // Base
         translate([-100,0,-20])
         linear_extrude(height=20)
-        square([200,base_length+50]);
-    
-        // Mid
-        translate([0,base_length,0])
-        rotate(a=FORK_MID_ANGLE, v=[1,0,0])
-        translate([-100,0,-20])
-        linear_extrude(height=20)
-        square([200,FORK_MID_LENGTH+50]);
-
-        // Tip
-        translate([0,0,FORK_MID_OFFSET])
-        translate([0,base_mid_length,0])
-        rotate(a=FORK_TIP_ANGLE, v=[1,0,0])
-        translate([-100,0,-20])
-        linear_extrude(height=20)
-        square([200,FORK_TIP_LENGTH+50]);
+        square([200,150]);
     }
+}
+
+module connector(tolerance) {
+    rotate(a=-35, v=[0,1,0])
+    cube([
+        CONNECTOR_LENGTH,
+        CONNECTOR_THICKNESS+tolerance,
+        CONNECTOR_THICKNESS+tolerance
+    ], center=true);
 }
 
 module connectors(tolerance) {
-    rotate(a=180, v=[0,0,1]) {
-        translate([RADIUS/2+1,0,RADIUS])
-            rotate(a=35, v=[1,0,0])
-            cube([
-                CONNECTOR_THICKNESS+tolerance,
-                CONNECTOR_LENGTH,
-                CONNECTOR_THICKNESS+tolerance
-            ], center=true);
-        translate([-RADIUS/2-2,0,RADIUS*3])
-          rotate(a=35, v=[1,0,0])
-            cube([
-                CONNECTOR_THICKNESS+tolerance,
-                CONNECTOR_LENGTH,
-                CONNECTOR_THICKNESS+tolerance
-            ], center=true);
-        translate([RADIUS/2+2.7,0,RADIUS*5])
-            rotate(a=35, v=[1,0,0])
-            cube([
-                CONNECTOR_THICKNESS+tolerance,
-                CONNECTOR_LENGTH,
-                CONNECTOR_THICKNESS+tolerance
-            ], center=true);
-    }
+    translate([0,RADIUS/2-1,RADIUS])
+        connector(tolerance);
+    translate([0,-RADIUS/2+1,RADIUS])
+        connector(tolerance);
+    translate([0,RADIUS/2-1,FORK_BASE_LENGTH-RADIUS])
+        connector(tolerance);
+    translate([0,-RADIUS/2+1,FORK_BASE_LENGTH-RADIUS])
+        connector(tolerance);
 }
 
 if (SHOW_BOTTOM) {
-translate([0,-EXPLODE,0]) {
+translate([EXPLODE,0,0]) {
     difference() {
         combined();
         divider();
@@ -185,7 +164,7 @@ translate([0,-EXPLODE,0]) {
 }
 
 if (SHOW_TOP) {
-translate([0,EXPLODE,0]) {
+translate([-EXPLODE,0,0]) {
     intersection() {
         combined();
         divider();
