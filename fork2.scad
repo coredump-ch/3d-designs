@@ -31,7 +31,7 @@ FORK_MID_OFFSET = sin(FORK_MID_ANGLE) * FORK_MID_LENGTH;
 
 
 module body() {
-	linear_extrude(height=LENGTH, twist=60)
+	linear_extrude(height=LENGTH, twist=60, slices=10)
 		circle(r=RADIUS, $fn=6);
 }
 
