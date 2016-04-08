@@ -13,8 +13,9 @@ FORK_TIP_ANGLE = 10;
 FORK_THICKNESS = 3;
 CONNECTOR_THICKNESS = 2;
 CONNECTOR_LENGTH = 5;
+CONNECTOR_TOLERANCE = 0.4;
 
-EXPLODE = 20;
+EXPLODE = 10;
 SHOW_TOP = true;
 SHOW_BOTTOM = true;
 
@@ -91,33 +92,43 @@ module combined() {
 
 module divider() {
     rotate(a=90, v=[1,0,0]) {
+        // Straight
+        translate([-100,0,-20])
+        linear_extrude(height=20)
+        square([200,FORK_BASE_LENGTH+50]);
     
-    // Straight
-    translate([-100,0,-20])
-    linear_extrude(height=20)
-    square([200,FORK_BASE_LENGTH+50]);
-    
-    // Angled
-    translate([0,FORK_BASE_LENGTH,0])
-    rotate(a=FORK_TIP_ANGLE, v=[1,0,0])
-    translate([-100,0,-20])
-    linear_extrude(height=20)
-    square([200,FORK_TIP_LENGTH+50]);
-        
+        // Angled
+        translate([0,FORK_BASE_LENGTH,0])
+        rotate(a=FORK_TIP_ANGLE, v=[1,0,0])
+        translate([-100,0,-20])
+        linear_extrude(height=20)
+        square([200,FORK_TIP_LENGTH+50]);
     }
 }
 
-module connectors() {
+module connectors(tolerance) {
     rotate(a=180, v=[0,0,1]) {
-        translate([RADIUS/2,0,RADIUS])
+        translate([RADIUS/2+1,0,RADIUS])
             rotate(a=35, v=[1,0,0])
-            cube([CONNECTOR_THICKNESS,CONNECTOR_LENGTH,CONNECTOR_THICKNESS]);
-        translate([-RADIUS/2-CONNECTOR_THICKNESS-0.5,0,RADIUS*3])
+            cube([
+                CONNECTOR_THICKNESS+tolerance,
+                CONNECTOR_LENGTH,
+                CONNECTOR_THICKNESS+tolerance
+            ], center=true);
+        translate([-RADIUS/2-2,0,RADIUS*3])
           rotate(a=35, v=[1,0,0])
-            cube([CONNECTOR_THICKNESS,CONNECTOR_LENGTH,CONNECTOR_THICKNESS]);
-        translate([RADIUS/2+1.8,0,RADIUS*5])
+            cube([
+                CONNECTOR_THICKNESS+tolerance,
+                CONNECTOR_LENGTH,
+                CONNECTOR_THICKNESS+tolerance
+            ], center=true);
+        translate([RADIUS/2+2.7,0,RADIUS*5])
             rotate(a=35, v=[1,0,0])
-            cube([CONNECTOR_THICKNESS,CONNECTOR_LENGTH,CONNECTOR_THICKNESS]);
+            cube([
+                CONNECTOR_THICKNESS+tolerance,
+                CONNECTOR_LENGTH,
+                CONNECTOR_THICKNESS+tolerance
+            ], center=true);
     }
 }
 
@@ -126,7 +137,7 @@ translate([0,-EXPLODE,0]) {
     difference() {
         combined();
         divider();
-        connectors();
+        connectors(CONNECTOR_TOLERANCE);
     }
 }
 }
@@ -137,6 +148,6 @@ translate([0,EXPLODE,0]) {
         combined();
         divider();
     }
-    connectors();
+    connectors(0);
 }
 }
