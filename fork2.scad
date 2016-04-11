@@ -5,21 +5,21 @@ RUBBERBAND_OFFSET = 10;
 RUBBERBAND_WIDTH_OUTER = 6;
 RUBBERBAND_WIDTH_INNER = 0.6;
 RUBBERBAND_DEPTH = 3;
-FORK_WIDTH_1 = 8.5;
+FORK_WIDTH_1 = 8;
 FORK_WIDTH_2 = 19.5;
 FORK_BASE_LENGTH = 98;
-FORK_MID_LENGTH = 5;
-FORK_MID_ANGLE = 10;
-FORK_TIP_LENGTH = 13;
-FORK_TIP_ANGLE = 25;
+FORK_MID_LENGTH = 9;
+FORK_MID_ANGLE = 6;
+FORK_TIP_LENGTH = 9;
+FORK_TIP_ANGLE = 13;
 FORK_THICKNESS = 3;
 CONNECTOR_THICKNESS = 3;
 CONNECTOR_LENGTH = 7;
 CONNECTOR_TOLERANCE = 0.4;
 
 EXPLODE = 20;
-SHOW_TOP = true;
-SHOW_BOTTOM = true;
+SHOW_RIGHT = true;
+SHOW_LEFT = true;
 
 // Calculate FORK_WIDTH_3 using the intercept theorem.
 FORK_WIDTH_3 = (
@@ -153,7 +153,7 @@ module connectors(tolerance) {
         connector(tolerance);
 }
 
-if (SHOW_BOTTOM) {
+if (SHOW_LEFT) {
 translate([EXPLODE,0,0]) {
     difference() {
         combined();
@@ -163,7 +163,7 @@ translate([EXPLODE,0,0]) {
 }
 }
 
-if (SHOW_TOP) {
+if (SHOW_RIGHT) {
 translate([-EXPLODE,0,0]) {
     intersection() {
         combined();
