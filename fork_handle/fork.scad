@@ -1,3 +1,12 @@
+/**
+ * Fork handle.
+ *
+ * Made by coredump hackerspace in Rapperswil, Switzerland.
+ * CC BY-SA 3.0.
+ *
+ * Originally published at https://www.youmagine.com/designs/fork-handle
+ *
+ */
 LENGTH = 120;
 RADIUS = 15;
 TIP_LENGTH = 5;
