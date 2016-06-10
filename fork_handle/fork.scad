@@ -121,12 +121,18 @@ module fork() {
     ]);
 }
 
+module bottom_rounding() {
+    rotate_extrude(angle = 360, $fn=100)
+        polygon([[RADIUS/3*2,0], [RADIUS,0], [RADIUS,RADIUS/3*2]]);
+}
+
 module combined() {
     difference() {
         handle();
         translate([0,FORK_THICKNESS/2,0])
             rotate(a=90, v=[1,0,0])
             fork();
+        bottom_rounding();
     }
 }
 
